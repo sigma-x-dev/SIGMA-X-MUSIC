@@ -125,19 +125,7 @@ async def _run_once():
 
 
 async def main():
-    """
-    _run_once() ko wrap karta hai taaki koi bhi unexpected crash (network
-    drop, connection reset, etc.) permanently bot ko offline na kar de —
-    thodi der baad process khud ko restart kar leta hai, jab tak Render
-    khud process kill na kare.
-    """
-    while True:
-        try:
-            await _run_once()
-            break  # idle() sirf tabhi return karta hai jab process ko normally stop kiya jaaye
-        except Exception as e:
-            LOGGER.error(f"Bot crash ho gaya, 10 second mein restart kar raha hoon: {e}")
-            await asyncio.sleep(10)
+    await _run_once()
 
 
 if __name__ == "__main__":
