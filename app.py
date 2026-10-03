@@ -57,6 +57,7 @@ async def register_bot_commands():
         await bot.set_bot_commands(
             [
                 BotCommand("start", "Bot ko start karo"),
+                BotCommand("help", "Bot ke saare commands dekho"),
                 BotCommand("play", "Gaana bajao"),
                 BotCommand("skip", "Agla gaana"),
                 BotCommand("pause", "Pause karo"),
