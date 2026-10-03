@@ -125,7 +125,15 @@ async def _run_once():
 
 
 async def main():
-    await _run_once()
+    while True:
+        try:
+            await _run_once()
+            break
+        except Exception as e:
+            LOGGER.error(
+                f"Bot crash ho gaya, 10 second mein restart kar raha hoon: {e}"
+            )
+            await asyncio.sleep(10)
 
 
 if __name__ == "__main__":
