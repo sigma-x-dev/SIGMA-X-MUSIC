@@ -289,7 +289,7 @@ async def _edit_body(cq_message, text: str, reply_markup):
         await _safe_quote_send(lambda t: cq_message.edit_caption(t, reply_markup=reply_markup), text)
     else:
         await _safe_quote_send(
-            lambda t: cq_message.edit_text(t, reply_markup=reply_markup, disable_web_page_preview=True),
+            lambda t: cq_message.edit_text(t, reply_markup=reply_markup),
             text,
         )
 
@@ -393,6 +393,10 @@ async def start_cmd(client, message: Message):
 async def help_menu_cb(client, cq: CallbackQuery):
     await cq.answer()
     await _edit_body(cq.message, HELP_TEXT, _help_keyboard())
+
+@bot.on_message(filters.command("help"))
+async def help_command(client, message: Message):
+    await message.reply_text(HELP_TEXT, reply_markup=_help_keyboard())
 
 
 @bot.on_callback_query(filters.regex("^back_to_start$"))
