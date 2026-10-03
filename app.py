@@ -122,6 +122,10 @@ async def _run_once():
             await assistant.stop()
         except Exception:
             pass
+            try:
+    await call_py.stop()
+except Exception:
+    pass
         LOGGER.info("🛑 Bot stopped")
 
 
