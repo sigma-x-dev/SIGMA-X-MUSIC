@@ -110,7 +110,7 @@ async def _run_once():
 
     keep_alive_task = asyncio.create_task(keep_alive())
 
-    try:
+        try:
         await idle()
     finally:
         keep_alive_task.cancel()
@@ -122,12 +122,11 @@ async def _run_once():
             await assistant.stop()
         except Exception:
             pass
-            try:
-    await call_py.stop()
-except Exception:
-    pass
+        try:
+            await call_py.stop()
+        except Exception:
+            pass
         LOGGER.info("🛑 Bot stopped")
-
 
 async def main():
     while True:
