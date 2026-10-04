@@ -670,6 +670,27 @@ async def on_stream_end(client, update):
     except Exception as e:
         LOGGER.error(f"Auto-play next error: {e}")
 
+# ---------------------------------------------------------------------------
+# VC manually end hone par queue aur playback state reset
+# ---------------------------------------------------------------------------
+@call_py.on_update(
+    fl.chat_update(ChatUpdate.Status.CLOSED_VOICE_CHAT)
+)
+async def closed_voice_chat_handler(client, update):
+    chat_id = update.chat_id
+
+    q.clear(chat_id)
+    q.set_now_playing(chat_id, None)
+    progress.clear(chat_id)
+
+    try:
+        await bot.send_message(
+            chat_id,
+            "🛑 **VC Ended**\n\nQueue aur playback state reset kar diya gaya."
+        )
+    except Exception as e:
+        LOGGER.warning(f"VC ended message failed: {e}")
+
 
 # ---------------------------------------------------------------------------
 # /autoplayon /autoplayoff — group ka autoplay chalu/band (sirf admin/owner ya
