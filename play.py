@@ -647,7 +647,7 @@ async def on_stream_end(client, update):
         # Queue khaali — autoplay ON hai to related gaana khud bajao
         next_track = await _autoplay_next_track(chat_id)
 
-     if not next_track:
+    if not next_track:
         q.set_now_playing(chat_id, None)
         progress.clear(chat_id)
 
