@@ -647,21 +647,21 @@ async def on_stream_end(client, update):
         # Queue khaali — autoplay ON hai to related gaana khud bajao
         next_track = await _autoplay_next_track(chat_id)
 
-    if not next_track:
-    q.set_now_playing(chat_id, None)
-    progress.clear(chat_id)
+     if not next_track:
+        q.set_now_playing(chat_id, None)
+        progress.clear(chat_id)
 
-    try:
-        await call_py.leave_group_call(chat_id)
-    except Exception as e:
-        LOGGER.warning(f"Auto leave VC fail: {e}")
+        try:
+            await call_py.leave_group_call(chat_id)
+        except Exception as e:
+            LOGGER.warning(f"Auto leave VC fail: {e}")
 
-    try:
-        await assistant.leave_chat(chat_id)
-    except Exception as e:
-        LOGGER.warning(f"Assistant group leave fail: {e}")
+        try:
+            await assistant.leave_chat(chat_id)
+        except Exception as e:
+            LOGGER.warning(f"Assistant group leave fail: {e}")
 
-    return
+        return
 
 
     try:
