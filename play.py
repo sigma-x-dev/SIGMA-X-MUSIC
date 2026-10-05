@@ -550,19 +550,34 @@ async def _start_playing(chat_id: int, track: dict, message: Message):
 
 
 def _now_playing_caption(track: dict) -> str:
-    # Screenshot wala fancy style + expandable quote (tap karke expand/scroll).
-    artists = [a.strip() for a in str(track.get("channel") or "").replace("-", ",").split(",") if a.strip()]
-    if not artists:
-        artists = [track.get("requested_by", "Unknown")]
+    title = smallcaps_title(track["title"])
+    duration = track.get("duration", "00:00")
+    requested_by = track.get("requested_by", "Unknown")
+
+    artists = [
+        a.strip()
+        for a in str(track.get("channel") or "").replace("-", ",").split(",")
+        if a.strip()
+    ]
+
+    artist_text = ", ".join(
+        smallcaps_title(a) for a in artists
+    ) if artists else "Unknown"
 
     body = (
-        f"» 『 {smallcaps_title(track['title'])} 』\n"
-        f"{bullet_lines(smallcaps_title(a) for a in artists)}\n\n"
-        f"⌾ {smallcaps_title('duration')} : {track['duration']}\n"
-        f"⌾ {smallcaps_title('by')} : {track.get('requested_by', 'Unknown')}\n\n"
-        f"{DIVIDER}"
+        f"🎵  {title}\n"
+        f"🎤  {artist_text}\n\n"
+        f"⏱️  {smallcaps_title('duration')}  ›  `{duration}`\n"
+        f"👤  {smallcaps_title('requested by')}  ›  {requested_by}\n\n"
+        f"✦  {smallcaps_title('on air')}\n"
+        f"   {smallcaps_title('your music, your mood')}\n"
+        f"   {smallcaps_title('sit back and enjoy the sound')}\n"
     )
-    return f"❖ {smallcaps_title('Now Playing')}..!! ✦\n\n" + expandable_quote(body)
+
+    return (
+        f"🎧  {smallcaps_title('now playing')}\n\n"
+        f"{expandable_quote(body)}"
+    )
 
 
 async def _send_now_playing(chat_id: int, track: dict, message: Message = None, edit_message: Message = None):
