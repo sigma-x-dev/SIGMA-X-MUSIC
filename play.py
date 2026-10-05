@@ -446,6 +446,10 @@ async def play_command(client, message: Message):
     requester = message.from_user.mention if message.from_user else "Someone"
     requester_id = message.from_user.id if message.from_user else None
 
+    try:
+        await message.delete()
+    except Exception as e:
+        LOGGER.warning(f"Play command delete failed: {e}")
     # Pehle confirm karo ki assistant account is group mein hai — nahi hai to
     # VC join hi nahi ho paayega. Khud join karwane ki koshish yahin hoti hai.
     joined, reason = await ensure_assistant_in_chat(chat_id)
