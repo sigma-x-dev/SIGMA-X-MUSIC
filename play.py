@@ -188,38 +188,54 @@ def _controls_keyboard():
     return InlineKeyboardMarkup(
         [
             [
+                _btn("⏪ 10s", callback_data="m_back10", style="primary"),
                 _btn("▶️", callback_data="m_resume", style="success"),
                 _btn("⏸", callback_data="m_pause", style="primary"),
-                _btn("🔁", callback_data="m_replay", style="primary"),
-                _btn("⏭", callback_data="m_skip", style="primary"),
-                _btn("⏹", callback_data="m_stop", style="danger"),
+                _btn("10s ⏩", callback_data="m_fwd10", style="primary"),
             ],
             [
-                _btn(f"⏪ -{SEEK_STEP}s", callback_data="m_back10", style="primary"),
-                _btn(f"+{SEEK_STEP}s ⏩", callback_data="m_fwd10", style="primary"),
+                _btn("🔁 Replay", callback_data="m_replay", style="primary"),
+                _btn("⏭ Skip", callback_data="m_skip", style="primary"),
+                _btn("⏹ Stop", callback_data="m_stop", style="danger"),
             ],
-            [_btn(f"⚙️ {smallcaps_title('bot settings')}", callback_data="m_settings", style="primary")],
-            [_btn(f"⊙ {smallcaps_title('close')} ⊙", callback_data="m_close", style="danger")],
+            [
+                _btn(
+                    "⚙️ Player Settings",
+                    callback_data="m_settings",
+                    style="primary",
+                )
+            ],
+            [
+                _btn(
+                    "✕ Close",
+                    callback_data="m_close",
+                    style="danger",
+                )
+            ],
         ]
     )
 
-
 def _settings_keyboard(autoplay_on: bool):
-    """Now Playing -> ⚙️ Bot Settings ke andar sirf 2 button: autoplay toggle + back."""
     state = smallcaps_title("on") if autoplay_on else smallcaps_title("off")
+
     return InlineKeyboardMarkup(
         [
             [
                 _btn(
-                    f"🔁 {smallcaps_title('autoplay')} : {state}",
+                    f"🔁 {smallcaps_title('autoplay')} • {state}",
                     callback_data="m_autoplay",
                     style="success" if autoplay_on else "danger",
                 )
             ],
-            [_btn(f"🔙 {smallcaps_title('back')}", callback_data="m_back", style="primary")],
+            [
+                _btn(
+                    "↩️ Back to Player",
+                    callback_data="m_back",
+                    style="primary",
+                )
+            ],
         ]
     )
-
 
 
 
