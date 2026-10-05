@@ -652,9 +652,11 @@ async def on_stream_end(client, update):
         progress.clear(chat_id)
 
         try:
-            await assistant.leave_chat(chat_id)
+            await call_py.leave_group_call(chat_id)
         except Exception as e:
-            LOGGER.warning(f"Assistant group leave fail: {e}")
+            LOGGER.warning(f"Auto leave VC fail: {e}")
+
+        return
 
         return
 
