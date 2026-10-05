@@ -90,10 +90,17 @@ def clear(chat_id: int):
 
 def render_bar(elapsed_sec: float, total_sec: int) -> str:
     total_sec = max(total_sec, 1)
+
     ratio = min(max(elapsed_sec / total_sec, 0.0), 1.0)
     filled = int(round(ratio * BAR_LENGTH))
-    bar = FILLED_CHAR * filled + EMPTY_CHAR * (BAR_LENGTH - filled)
-    return f"`{format_duration(int(elapsed_sec))}` {bar} `{format_duration(int(total_sec))}`"
+
+    bar = "━" * filled + "─" * (BAR_LENGTH - filled)
+
+    return (
+        f"⏱ `{format_duration(int(elapsed_sec))}` "
+        f"{bar} "
+        f"`{format_duration(int(total_sec))}`"
+    )
 
 
 def start_updater(chat_id: int, message, caption_fn, markup_fn, video_id: str, total_sec: int):
